@@ -25,12 +25,12 @@ def load_mnist() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         image_size = 28
         if x == "train":
             num_images = 60000
-            images_path = "data/train-images-idx3-ubyte.gz"
-            labels_path = "data/train-labels-idx1-ubyte.gz"
+            images_path = "../data/train-images-idx3-ubyte.gz"
+            labels_path = "../data/train-labels-idx1-ubyte.gz"
         else:
             num_images = 10000
-            images_path = "data/t10k-images-idx3-ubyte.gz"
-            labels_path = "data/t10k-labels-idx1-ubyte.gz"
+            images_path = "../data/t10k-images-idx3-ubyte.gz"
+            labels_path = "../data/t10k-labels-idx1-ubyte.gz"
         if y == "images":
             f = gzip.open(images_path, "r")
             f.read(16)
