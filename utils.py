@@ -1,19 +1,25 @@
 import gzip
-import numpy as np
-import matplotlib.pyplot as plt
 import itertools
+from typing import Tuple, List
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def load_mnist():
+def load_mnist() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    Read in MNIST dataset from "data" directory.
+    Reads in MNIST handwritten digits dataset from "data" directory.
 
-    Return:
-        X_train - (60000, 784) NumPy array containing the training images
-        X_test - (10000, 784) NumPy array containing the testing images
-        y_train - (60000, ) NumPy array containing the training data labels
-        y_test - (10000, ) NumPy array containing the testing data labels
+    Returns:
+        X_train: (60000, 784) array containing training image pixel data
+        X_test: (10000, 784) array containing testing image pixel data
+        y_train: (60000, ) array containing training image labels
+        y_test: (10000, ) array containing testing image labels
     """
+    X_train = None
+    X_test = None
+    y_train = None
+    y_test = None
 
     for x, y in list(itertools.product(["train", "test"], ["images", "labels"])):
         image_size = 28
@@ -48,19 +54,18 @@ def load_mnist():
     return X_train, X_test, y_train, y_test
 
 
-def make_batches(data, labels, batch_size):
+def make_batches(data: np.ndarray, labels: np.ndarray, batch_size: int) -> List[Tuple[np.ndarray, np.ndarray]]:
     """
-    Create batches from shuffled data.
+    Creates batches from shuffled data.
 
     Args:
-        data - (n_samples, n_features) NumPy array containing image data without labels
-        labels - (n_samples, ) NumPy array containing image labels
-        batch_size - batch size (int)
+        data: (num_samples, num_features) array containing image data without labels
+        labels: (num_samples, ) array containing image labels
+        batch_size: number of samples in each batch
 
     Returns:
-        batches - list of tuples where each tuple contains a (batch_size, n_features) Numpy
-                  array containing image data and a (batch_size, ) NumPy array containing the
-                  corresponding labels
+        list of tuples where each tuple contains a (batch_size, n_features) array
+        containing image data and a (batch_size, ) array containing the corresponding labels
     """
     labels = labels[:, np.newaxis]
     concatenated = np.hstack((data, labels))
@@ -74,12 +79,12 @@ def make_batches(data, labels, batch_size):
     return batches
 
 
-def display_mnist_image(image):
+def display_mnist_image(image: np.ndarray):
     """
     Displays image of digit in the MNIST dataset
 
     Args:
-        image - (784, ) NumPy array containing MNIST image
+        image: (784, ) array containing MNIST image
     """
     plt.imshow(image.reshape(28, 28))
     plt.show()
